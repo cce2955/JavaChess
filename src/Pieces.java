@@ -5,8 +5,9 @@ public class Pieces {
 	private int posY;
 	private int color;
 	private int idIndex;
+	private String boardId;
 	
-	public void chessPiece (int idType, int posX, int posY, int color, int index)
+	public void chessPiece (int idType, int posX, int posY, int color, int index, String boardId)
 	{
 		//To make things easy I'm gonna set up chess pieces with IDs
 		//1 is pawn, 2 is rook, 3 is knight, 4, is bishop, 
@@ -16,6 +17,14 @@ public class Pieces {
 		//pawn 3
 	}
 	
+	public String setboardId()
+	{
+		return this.boardId;
+	}
+	public void getboardId(String screenId)
+	{
+		this.boardId = screenId;
+	}
 	public int getId(){
 		return this.idType;
 		

@@ -1,6 +1,11 @@
 
 public class mainExec {
 
+	/*
+	 * Looking at this, I'm pretty much coming to the conclusion I need a GUI, I could do this in console but it's more work than it's worth
+	 * I'll boot up GIMP on a free day and give it a shot.
+	 */
+	
 	//For some reason I just like making functions and plopping them in main
 	//A throwback to my javascript days
 	
@@ -14,6 +19,7 @@ public class mainExec {
 	static Pieces []knight = new Pieces[32]; 		//Spawns an empty object for Knights
 	static Pieces []king = new Pieces[32]; 			//Spawns an empty object for Kings
 	static Pieces []queen = new Pieces[32];			//Spawns an empty object for Queens
+	
 	
 	public static void createPieces(){ //Creates chess Pieces
 		int x;
@@ -42,6 +48,7 @@ public class mainExec {
 						//System.out.println(x); 		//Testing purposes
 						pawn[x].setIndex(x);			//Set index for pawn, so I know pawn 1 is pawn 1 and not pawn 2 or 3 or etc.
 						pawn[x].setID(1); 				//ID so I know it's a pawn
+						pawn[x].getboardId("p");
 						pawn[x].setColor(0);			//Set pawns black
 						if (x >= 8)						//After 8 pawns have been set black, start setting them white
 						{
@@ -53,6 +60,7 @@ public class mainExec {
 							rook[x] = new Pieces(); 	//Setup rooks
 							rook[x].setIndex(x); 		//Gives rooks their index for positioning
 							rook[x].setID(2); 			//Rook IDs
+							rook[x].getboardId("r");
 							rook[x].setColor(0); 		//Black Rooks!!!
 							if (x >= 19)
 							{
@@ -64,6 +72,7 @@ public class mainExec {
 							bishop[x] = new Pieces();  	//Generate Bishops
 							bishop[x].setIndex(x);		//Rook Index for positioning
 							bishop[x].setID(3);			//Bishop IDs
+							bishop[x].getboardId("b");
 							bishop[x].setColor(0);		//Make em Black
 							if (x >= 23)
 							{
@@ -74,7 +83,8 @@ public class mainExec {
 						{
 							knight[x] = new Pieces();	//generate knights
 							knight[x].setIndex(x);		//knights indices
-							knight[x].setID(4);			//knights IDs	
+							knight[x].setID(4);			//knights IDs
+							knight[x].getboardId("k");
 							knight[x].setColor(0);		//Knights Whites
 							if (x >= 27)
 							{
@@ -86,6 +96,7 @@ public class mainExec {
 							queen[x] = new Pieces();	//Generate some queens
 							queen[x].setIndex(x);		//Give em an index in the 29/30 range
 							queen[x].setID(5);			//Queen IDs
+							queen[x].getboardId("q");
 							queen[x].setColor(0);		//Queens are Black!!
 							if (x == 30)
 							{
@@ -97,6 +108,7 @@ public class mainExec {
 							king[x] = new Pieces();		//Generate some Kings
 							king[x].setIndex(x);		//Give em an index in the 31/32 range
 							king[x].setID(6);			//Kings have an index of 6
+							king[x].getboardId("K");
 							king[x].setColor(0);		//Kings are black
 							if (x == 32)
 							{
@@ -111,7 +123,9 @@ public class mainExec {
 		int x,y;
 		for (x = 0, y = 0; y < 8;)
 			{
-				System.out.print("[]"); 				//Prints brackets
+			
+			
+			System.out.print("[]"); 				//Prints brackets
 				++x; 
 				if (x >= 8) 							//When a row of brackets is made, bump Y by one and make a new line, start over
 				{
@@ -169,7 +183,11 @@ public class mainExec {
 	public static void main(String[] args) {
 		createBoard();
 		createPieces();
-		debugOutput();
+		
+		
+		
+		
+		//debugOutput();
 			
 	}
 	
