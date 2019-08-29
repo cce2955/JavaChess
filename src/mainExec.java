@@ -26,15 +26,14 @@ public class mainExec {
 		Pieces []rook = new Pieces[4]; 			//Spawns an empty object for Rooks
 		Pieces []bishop = new Pieces[4]; 		//Spawns an empty object for Bishops
 		Pieces []knight = new Pieces[4]; 		//Spawns an empty object for Knights
-		Pieces []king = new Pieces[2]; 			//Spawns an empty object fo	r Kings
+		Pieces []king = new Pieces[2]; 			//Spawns an empty object for Kings
 		Pieces []queen = new Pieces[2];			//Spawns an empty object for Queens*/
 		//------------------------------------------
 		//16+4+4+4+2+2 = 32, thanks for coming to my ted talk
 		
 		//For some reason bishops have dominated all bounds above their limits, so bug fixing is on that right now 8/28/2019 10:25
 		//Bishop bug fixed 8/28/2019 10:33
-		//Meaning I could've just set IDs and kept them as "Pieces" instead of identifying each one, but it's more for me than the compiler
-		//Nothing will be changed as IDs and Colors were assigned correctly
+		//All pieces spawn correctly, they're grouped by IDs
 			for (x = 0; x < 32; x++)
 				{
 					if (x <= 16) 						//Generate Pawns as long as they're under 16
@@ -129,8 +128,8 @@ public class mainExec {
 		//So I'll just activate this and waste an extra 30 minutes making sure all the variables are working correctly
 		//Thanks eclipse
 		
-		//System.out.println("Queen ID is " + pawn[29].getId() + "and Index is: " + queen[2].getIndex());
-		for (x = 0; x <= 36; x++)
+		//System.out.println("Queen ID is " + king[30].getId() + "and Index is: " + queen[2].getIndex());
+		/*for (x = 0; x <= 36; x++)
 		{
 			System.out.println("X is at: " + x);
 			while (x <= 16) 						//Generate Pawns as long as they're under 16
@@ -165,7 +164,7 @@ public class mainExec {
 				
 			}
 			
-		}
+		}*/
 	}
 	public static void main(String[] args) {
 		createBoard();
