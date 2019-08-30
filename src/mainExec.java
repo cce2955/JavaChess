@@ -1,4 +1,5 @@
 
+
 public class mainExec {
 
 	/*
@@ -19,6 +20,11 @@ public class mainExec {
 	static Pieces []knight = new Pieces[32]; 		//Spawns an empty object for Knights
 	static Pieces []king = new Pieces[32]; 			//Spawns an empty object for Kings
 	static Pieces []queen = new Pieces[32];			//Spawns an empty object for Queens
+	//----------------------------------------------------------------------------------
+	static int xCounter = 0; //I did my for loop wrong or maybe not the proper way
+	//The xCounter monitors how many X values have been accounted for in the x loop so it can match up with posX and posY and show 
+	//where the piece should be
+	static String[] boardSpots = new String[64]; //An array that stores where all the pieces of the board are
 	
 	
 	public static void createPieces(){ //Creates chess Pieces
@@ -40,9 +46,18 @@ public class mainExec {
 		//For some reason bishops have dominated all bounds above their limits, so bug fixing is on that right now 8/28/2019 10:25
 		//Bishop bug fixed 8/28/2019 10:33
 		//All pieces spawn correctly, they're grouped by IDs
+		/*
+		 * ID Codes:
+		 * 1 Pawn
+		 * 2 rook
+		 * 3 bishop
+		 * 4 knight
+		 * 5 queen
+		 * 6 king
+		 */
 			for (x = 0; x < 32; x++)
 				{
-					if (x <= 16) 						//Generate Pawns as long as they're under 16
+					if (x <= 15) 						//Generate Pawns as long as they're under 16
 					{
 						pawn[x] = new Pieces(); 		//Make a new pawn in position x allowed by for loop
 						//System.out.println(x); 		//Testing purposes
@@ -55,7 +70,7 @@ public class mainExec {
 							pawn[x].setColor(1);
 						}
 					}
-					if (x <= 17 || x <= 20)				//Generate Rooks
+					if (x <= 16 || x <= 19)				//Generate Rooks
 						{
 							rook[x] = new Pieces(); 	//Setup rooks
 							rook[x].setIndex(x); 		//Gives rooks their index for positioning
@@ -67,7 +82,7 @@ public class mainExec {
 								rook[x].setColor(1); 	//White Rooks!!!
 							}
 						}
-					if (x <= 21 || x <= 24)
+					if (x <= 20 || x <= 23)
 						{
 							bishop[x] = new Pieces();  	//Generate Bishops
 							bishop[x].setIndex(x);		//Rook Index for positioning
@@ -79,7 +94,7 @@ public class mainExec {
 								bishop[x].setColor(1);	//Make em White
 							}
 						}
-					if (x <= 25 || x <= 28)
+					if (x <= 24 || x <= 27)
 						{
 							knight[x] = new Pieces();	//generate knights
 							knight[x].setIndex(x);		//knights indices
@@ -91,7 +106,7 @@ public class mainExec {
 								knight[x].setColor(1);	//Knacks Blacks
 							}
 						}
-					if (x <= 29 || x <= 30)
+					if (x <= 28 || x <= 29)
 						{
 							queen[x] = new Pieces();	//Generate some queens
 							queen[x].setIndex(x);		//Give em an index in the 29/30 range
@@ -117,72 +132,137 @@ public class mainExec {
 						}
 				}
 			}
+	public static void startingPosition() {
+		//Generate the starting position, there's really no way around manually doing this.
+		//After this I'll have an AI track the position of each piece
+		int x = 0;
+		for (x = 0; x <= 15; x++)
+		{
+			if (x <= 7)
+			{
+					pawn[x].setPosY(7);							 //Set all pawns at the bottom to the 7th space of the grid
+			}
+			if (x >= 8)
+			{
+				pawn[x].setPosY(2);						//Set all pawns at the top to the second line
+			}
+		}
+		pawn[0].setPosX(49);							//Intialize each pawn in their position
+		pawn[1].setPosX(50);							//[] [] [] [] [] [] [] [] These pawns go above the 8th row
+		pawn[2].setPosX(51);							//[57] [58] [59] [60] [61] [62] [63] [64]
+		pawn[3].setPosX(52);
+		pawn[4].setPosX(53);
+		pawn[5].setPosX(54);
+		pawn[6].setPosX(55);
+		pawn[7].setPosX(56);
+		for (x=8; x <= 15; x++)
+		{
+				pawn[x].setPosX(x); //Thank god these variables match, x equals x and all that's I ask for
+		}
+		
+		
+	}
 	public static void createBoard() //Creates a board, this is more for show than anything
 	{
+		//Shot myself in the foot here, my new strategy to get this working despite the memory hog it'll create is to create an array and store the
+		//results and then print them out
+		//yeah I might just do that
 		System.out.println("Hi, Ready to start? Setting up board");
-		int x,y;
-		for (x = 0, y = 0; y < 8;)
-			{
-			
-			
-			System.out.print("[]"); 				//Prints brackets
-				++x; 
-				if (x >= 8) 							//When a row of brackets is made, bump Y by one and make a new line, start over
-				{
-					++y;
-					System.out.println("");
-					x = 0;
-				}
-			}
-	}
-	public static void debugOutput() //Debugging function, it'll print out stuff just for checking
-	{
-		int x;
-		//This entire function is for me to plug in at random moments, the debugger in eclipse isn't working how I'm used to
-		//So I'll just activate this and waste an extra 30 minutes making sure all the variables are working correctly
-		//Thanks eclipse
-		
-		//System.out.println("Queen ID is " + king[30].getId() + "and Index is: " + queen[2].getIndex());
-		/*for (x = 0; x <= 36; x++)
+		int x, x2, y;
+		y = 0;
+		x=0;
+		x2 = 0;
+		xCounter = 0;
+		for (x = 0; x <= 63; ++x)
 		{
-			System.out.println("X is at: " + x);
-			while (x <= 16) 						//Generate Pawns as long as they're under 16
-			{
-				System.out.println("Pawn Stats, ID: " + pawn[x].getId() + " index: " + pawn[x].getIndex() + " color:" + pawn[x].getColor());
-				++x;
-			}
-			while (x <= 17 || x <= 20)				//Generate Rooks
-			{
-				System.out.println("Rook Stats, ID: " + rook[x].getId() + " index: " + rook[x].getIndex() + " color:" + rook[x].getColor());
-				++x;
-			}
-			while (x <= 21 || x <= 24)
-			{
-				System.out.println("Bishop Stats, ID: " + bishop[x].getId() + " index: " + bishop[x].getIndex() + " color:" + bishop[x].getColor());
-				++x;
-			}
-			while (x <= 25 || x <= 28)
-			{
-				System.out.println("Knight Stats, ID: " + knight[x].getId() + " index: " + knight[x].getIndex() + " color:" + knight[x].getColor());
-				++x;
-			}
-			while (x <= 29 || x <= 30)
-			{
-				System.out.println("queen Stats, ID: " + queen[x].getId() + " index: " + queen[x].getIndex() + " color:" + queen[x].getColor());
-				++x;
-			}
-			while (x <= 31)
-			{
-				System.out.println("king Stats, ID: " + king[x].getId() + " index: " + king[x].getIndex() + " color:" + king[x].getColor());
-				++x;
-				
-			}
+			boardSpots[x] = "[]"; //Create empty spaces on the board all across
+		}
+			for (x = 0; x <= 64; ++x) { //This is really ugly but we're gonna pass over all the possible 
+				//spaces of the board and store the position of each piece in an array called boardSpots
+				{
+					for (x2 = 0; x2 <= 15; ++x2)
+						{
+						if (pawn[x2].getPosX() == xCounter && pawn[x2].getPosY() == y)
+							{
+								boardSpots[x2] = "p"; //If posX and PosY match, replace [] with [p]
+								
+							}
+							
+						}
+					for( x2 = 16; x2 >=16 && x2 <= 19; ++x2)
+						{
+							
+							if (rook[x2].getPosX() == xCounter && rook[x2].getPosY() == y)
+							{
+								boardSpots[x2] = "[r]"; //If posX and PosY match, replace with [r]
+							}
+						}
+					for( x2 = 20; x2 >=20 && x2 <= 23; ++x2)
+						{
+							if (bishop[x2].getPosX() == xCounter && bishop[x2].getPosY() == y)
+							{
+								boardSpots[x2] = "[b]"; //If match, then [b]
+							}
+						}
+					for( x2 = 24; x2 >=24 && x2 <= 27; ++x2)
+						{
+						if (knight[x2].getPosX() == xCounter && knight[x2].getPosY() == y)
+							{
+								boardSpots[x2] = "[k]"; //Match then [k]
+							}
+						}
+					for( x2 = 28; x2 >=28 && x2 <= 29; ++x2)
+						{
+						if (queen[x2].getPosX() == xCounter && queen[x2].getPosY() == y)
+							{
+								boardSpots[x2] = "[Q]";
+							}
+						}
+					for (x2 = 30; x2 <= 30; ++x2)
+						{
+						if (king[x2].getPosX() == xCounter && king[x2].getPosY() == y)
+							{
+								boardSpots[x2] = "[K]";
+							}
+						}
+					}	
+				}
+		}
 			
-		}*/
+	public static void postBoard()
+	{
+		int x,y, counter;
+		x = 0;
+		y = 0;
+		counter = 0;
+		for (y = 0; y <= 8; ++y)
+		{
+			
+			while (x <= 7)
+			{
+				System.out.print(boardSpots[counter]);
+				++x;
+				++counter;
+			}
+			x = 0;
+			System.out.println("");
+		}
 	}
+					
+	
+	
+	public static void printBlank()
+	{
+		System.out.println("");
+	}
+	
+	
 	public static void main(String[] args) {
-		createBoard();
-		createPieces();
+		createPieces(); 			//Create Pieces First
+		startingPosition();			//Set their Position
+		createBoard();				//Generate the board and set the pieces in their place.
+		postBoard(); 				//Post board to console for your eyeball viewing
+		
 		
 		
 		
