@@ -24,7 +24,7 @@ public class mainExec {
 	static int xCounter = 0; //I did my for loop wrong or maybe not the proper way
 	//The xCounter monitors how many X values have been accounted for in the x loop so it can match up with posX and posY and show 
 	//where the piece should be
-	static String[] boardSpots = new String[64]; //An array that stores where all the pieces of the board are
+	static String[] boardSpots = new String[80]; //An array that stores where all the pieces of the board are
 	
 	
 	public static void createPieces(){ //Creates chess Pieces
@@ -132,33 +132,102 @@ public class mainExec {
 						}
 				}
 			}
-	public static void startingPosition() {
-		//Generate the starting position, there's really no way around manually doing this.
+	public static void startingPosition() {//Generate the starting position, there's really no way around manually doing this.
 		//After this I'll have an AI track the position of each piece
 		int x = 0;
-		for (x = 0; x <= 15; x++)
+		// This sets up all the Y values of every piece
+		for (x = 0; x <= 63; x++)
 		{
 			if (x <= 7)
-			{
-					pawn[x].setPosY(7);							 //Set all pawns at the bottom to the 7th space of the grid
-			}
-			if (x >= 8)
-			{
-				pawn[x].setPosY(2);						//Set all pawns at the top to the second line
-			}
+				{
+					pawn[x].setPosY(7);						 //Set all pawns at the bottom to the 7th space of the grid
+				}
+			if (x >= 8 && x <=15)
+				{
+					pawn[x].setPosY(1);						//Set all pawns at the top to the second line
+				}
+			if (x ==16 || x ==17)
+				{
+					rook[x].setPosY(7); 					//Repeat each line
+				}
+			if (x == 18 || x == 19)
+				{
+					rook[x].setPosY(0);
+				}
+			if (x == 20 || x == 21)
+				{
+					bishop[x].setPosY(7);
+				}
+			if (x == 22 || x == 23)
+				{
+					bishop[x].setPosY(0);
+				}
+			if (x == 22 || x == 23)
+				{
+					knight[x].setPosY(7);
+				}
+			if (x == 22 || x == 23)
+				{
+					knight[x].setPosY(0);
+				}
+			if (x == 22)
+				{
+					queen[x].setPosY(7);
+				}
+			if (x ==23)
+				{
+					queen[x].setPosY(0);
+				}
+			if (x == 24)
+				{
+					king[x].setPosY(7);
+				}
+			if (x ==25)
+				{
+					king[x].setPosY(0);
+				}
 		}
-		pawn[0].setPosX(49);							//Intialize each pawn in their position
-		pawn[1].setPosX(50);							//[] [] [] [] [] [] [] [] These pawns go above the 8th row
-		pawn[2].setPosX(51);							//[57] [58] [59] [60] [61] [62] [63] [64]
-		pawn[3].setPosX(52);
-		pawn[4].setPosX(53);
-		pawn[5].setPosX(54);
-		pawn[6].setPosX(55);
-		pawn[7].setPosX(56);
+		//Here is where I'll initialize all pieces in their X position
+		
+		pawn[0].setPosX(48);							//Initialize each pawn in their position
+		pawn[1].setPosX(49);							//[] [] [] [] [] [] [] [] These pawns go above the 8th row
+		pawn[2].setPosX(50);							//[57] [58] [59] [60] [61] [62] [63] [64]
+		pawn[3].setPosX(51);
+		pawn[4].setPosX(52);
+		pawn[5].setPosX(53);
+		pawn[6].setPosX(54);
+		pawn[7].setPosX(55);
 		for (x=8; x <= 15; x++)
 		{
 				pawn[x].setPosX(x); //Thank god these variables match, x equals x and all that's I ask for
 		}
+		rook[16].setPosX(56);
+		rook[17].setPosX(63);
+		rook[18].setPosX(0);
+		rook[19].setPosX(7);
+		bishop[20].setPosX(57);
+		bishop[21].setPosX(61);
+		bishop[22].setPosX(2);
+		bishop[23].setPosX(5);
+		knight[24].setPosX(58);
+		knight[25].setPosX(62);
+		knight[26].setPosX(1);
+		knight[27].setPosX(6);
+		queen[28].setPosX(59);
+		queen[29].setPosX(3);
+		king[30].setPosX(4);
+		king[31].setPosX(60);
+		/*Graph for reference
+		 * 0r	1k	2b	3Q	4K	5b 	6k 	7r
+		 * 8p 	9p	10p	11p	12p	13p	14p	15p
+		 * 16 	17	18	19	20	21	22	23
+		 * 24	25	26	27	28	29	30	31
+		 * 32	33	34	35	36	37	38	39
+		 * 40	41	42	43	44	45	46	47
+		 * 48p	49p	50p	51p	52p	53p	54p	55p
+		 * 56r	56k	57b	58Q	59K	60b	61k	62r
+		 */
+		
 		
 		
 	}
@@ -173,79 +242,124 @@ public class mainExec {
 		x=0;
 		x2 = 0;
 		xCounter = 0;
-		for (x = 0; x <= 63; ++x)
+		for (x = 0; x <= 65; ++x)
 		{
-			boardSpots[x] = "[]"; //Create empty spaces on the board all across
+			boardSpots[x] = "[ ] "; //Create empty spaces on the board all across
+			//Any spots taken by the pieces will be overwritten
 		}
-			for (x = 0; x <= 64; ++x) { //This is really ugly but we're gonna pass over all the possible 
-				//spaces of the board and store the position of each piece in an array called boardSpots
+		//The board was flattened to a single row, separated by 7 cuts
+		//first line has 8 spots
+		//Second has 8, etc. So spot 13 would be the fifth space on the second row
+		/*On second thought I'm gonna draw a grid to keep me from going insane
+		 * 		/*Graph for reference
+		 * 0r	1k	2b	3Q	4K	5b 	6k 	7r
+		 * 8p 	9p	10p	11p	12p	13p	14p	15p
+		 * 16 	17	18	19	20	21	22	23
+		 * 24	25	26	27	28	29	30	31
+		 * 32	33	34	35	36	37	38	39
+		 * 40	41	42	43	44	45	46	47
+		 * 48p	49p	50p	51p	52p	53p	54p	55p
+		 * 56r	56k	57b	58Q	59K	60b	61k	62r
+		 */
+
+		
+		//----------------------------------------------------------------------------------
+		// Explanation of Code and some notes for my mental health
+		//If PosX matches X and posY matches Y, then slap [p] in the position of X
+		//so for example pawn [8], has a posX of 8 and a Y of 2
+		//so if x == 8 and y == 2, then board spots [8] will have "[p] inserted
+		//At least that's the theory
+		//------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------
+		/*	If I reach the point of no return I'll build a table here of values that match up to PosX and posY
+		 * Default Positions for reference
+		 * 
+		 * 
+		 * 
+		 * 							
+		 * 							
+		 * 							
+		 */
+		
+		for (x = 0; x <= 64; ++x) { //This is really ugly but here I go 
+				//Iterate by X, coincides with PosX
 				{
-					for (x2 = 0; x2 <= 15; ++x2)
-						{
-						if (pawn[x2].getPosX() == xCounter && pawn[x2].getPosY() == y)
+					//++xCounter; //Obsolete counter, doesn't affect anything thatI can recall, trying to tie this code together and clean it up
+					for (y = 0; y < 8; ++y)
+					{//Iterate by Y, coincides with posY
+						for (x2 = 0; x2 <= 15; ++x2) //While X is counting up, cycle through all instances of a pawn
 							{
-								boardSpots[x2] = "p"; //If posX and PosY match, replace [] with [p]
+								if (pawn[x2].getPosX() == x && pawn[x2].getPosY() == y)
+									{
+										boardSpots[x] = "[p] "; //If posX and PosY match, replace [] with [p]
+									}
+							}
+						for( x2 = 16; x2 >=16 && x2 <= 19; ++x2)
+							{
+							
+								if (rook[x2].getPosX() == x && rook[x2].getPosY() == y)
+								{
+									boardSpots[x] = "[r] "; //If posX and PosY match, replace with [r]
+								}
+							}
+						
+						for(x2 = 20; x2 >=20 && x2 <= 23; ++x2)
+							{
 								
+								if (bishop[x2].getPosX() == x && bishop[x2].getPosY() == y)
+								{
+									boardSpots[x] = "[b] "; //If match, then [b]
+								}
 							}
+						for(x2 = 24; x2 >=24 && x2 <= 27; ++x2)
+							{
 							
-						}
-					for( x2 = 16; x2 >=16 && x2 <= 19; ++x2)
-						{
+							if (knight[x2].getPosX() == x && knight[x2].getPosY() == y)
+								{
+									boardSpots[x] = "[k] "; //Match then [k]
+								}
+							}
+						for( x2 = 28; x2 >=28 && x2 <= 29; ++x2)
+							{
 							
-							if (rook[x2].getPosX() == xCounter && rook[x2].getPosY() == y)
+							if (queen[x2].getPosX() == x && queen[x2].getPosY() == y)
+								{
+									boardSpots[x] = "[Q] ";
+								}
+							}
+						for (x2 = 30; x2 <= 31; ++x2)
 							{
-								boardSpots[x2] = "[r]"; //If posX and PosY match, replace with [r]
+							
+							if (king[x2].getPosX() == x && king[x2].getPosY() == y)
+								{
+									boardSpots[x] = "[K] ";
+								}
 							}
 						}
-					for( x2 = 20; x2 >=20 && x2 <= 23; ++x2)
-						{
-							if (bishop[x2].getPosX() == xCounter && bishop[x2].getPosY() == y)
-							{
-								boardSpots[x2] = "[b]"; //If match, then [b]
-							}
-						}
-					for( x2 = 24; x2 >=24 && x2 <= 27; ++x2)
-						{
-						if (knight[x2].getPosX() == xCounter && knight[x2].getPosY() == y)
-							{
-								boardSpots[x2] = "[k]"; //Match then [k]
-							}
-						}
-					for( x2 = 28; x2 >=28 && x2 <= 29; ++x2)
-						{
-						if (queen[x2].getPosX() == xCounter && queen[x2].getPosY() == y)
-							{
-								boardSpots[x2] = "[Q]";
-							}
-						}
-					for (x2 = 30; x2 <= 30; ++x2)
-						{
-						if (king[x2].getPosX() == xCounter && king[x2].getPosY() == y)
-							{
-								boardSpots[x2] = "[K]";
-							}
-						}
-					}	
+					}
 				}
 		}
 			
-	public static void postBoard()
+	public static void postBoard()//Post the board to the console
 	{
+		
+		//Right now I seem to have made a mistake, looks like the pieces post to the index and not the x,y
+		//Seems like an easy fix but it's like 1:30 AM so I'm gonna make a branch out of this and call it a night
 		int x,y, counter;
 		x = 0;
 		y = 0;
 		counter = 0;
-		for (y = 0; y <= 8; ++y)
+		for (y = 0; y <= 7; ++y)//Count up in y
 		{
 			
-			while (x <= 7)
+			while (x <= 7)//while x is less than 8, count up on everything
 			{
 				System.out.print(boardSpots[counter]);
-				++x;
+				++x;//Iterate so this loop will end
 				++counter;
 			}
-			x = 0;
-			System.out.println("");
+			x = 0;//Once you leave, change x back to zero so y will iterate and we can do the loop again
+			System.out.println(""); //make a new line
 		}
 	}
 					
