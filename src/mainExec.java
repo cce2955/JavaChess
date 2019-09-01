@@ -1,4 +1,13 @@
-
+//Main file for my project, all main stuff goes here
+//I'm gonna go ahead and do a post mortem now because there's so much I could've done better
+//First off those pieces in mainExec that I spawned, I could've kept them much simpler
+//Instead of spawning rook at 17 or so, coulda started over at 1
+//Same with everything else, glad I got things to work as they did anyway.
+//On top of this, the board is spawned in a row, which technically makes sense
+//but it could be better by spawning a 2D matrix [x][y] instead of a single array [x]
+//That way I could've taken advantage of the posX, posY system I set up
+//Even better some pen and paper documentation would be nice, for my next at home project
+//I'll attempt to do that, I have a list of projects I can work on and would love to get more experience
 
 public class mainExec {
 

@@ -1,4 +1,4 @@
-
+//Getters and setters for chess pieces, call in main to generate chess pieces
 public class Pieces {
 	private int idType;
 	private int posX;
